@@ -1,9 +1,7 @@
 package com.fag.listatarefasdozucco.controller;
 
-import com.example.todo.model.Todo;
-import com.example.todo.service.TodoService;
+import com.fag.listatarefasdozucco.Model.Lista;
 import com.fag.listatarefasdozucco.service.ListaService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,4 +26,14 @@ public class ListaController {
         return "redirect:/";
     }
     
+    @GetMapping("/complete/{id}")
+    public String tarefaCompletada(@PathVariable Long id) {
+        listaService.marcaCompletado(id);
+        return "redirect:/";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteTarefa(@PathVariable Long id) {
+        listaService.removeTarefa(id);
+        return "redirect:/";
 }

@@ -12,7 +12,11 @@
     <h1>Lista de Tarefas</h1>
     <ul>
         <!--Lista de Tarefas é exibida aqui-->
-        <li th:each="tarefa : ${tarefas}" th:text="${lista.tarefas}"></li>
+        <li th:each="tarefa : ${tarefas}" th:text="${tarefa.tarefa}">
+            <!-- Adiciona os links para marcar como concluído e excluir -->
+            <a th:if="${not tarefa.completado}" th:href="@{'/completado/' + ${tarefa.id}}">(Marcar como Concluído)</a>
+            <a th:href="@{'/delete/' + ${tarefa.id}}">(Excluir)></a>
+        </li>
     </ul>
     <form action="/add" method="post">
         <input type="text" name="tarefa" required>
