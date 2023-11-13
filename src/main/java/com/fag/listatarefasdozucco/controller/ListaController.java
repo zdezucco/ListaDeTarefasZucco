@@ -1,10 +1,15 @@
 package com.fag.listatarefasdozucco.controller;
 
+<<<<<<< HEAD
 import com.fag.listatarefasdozucco.model.Lista;
 import com.fag.listatarefasdozucco.service.ListaService;
 
 import java.util.List;
 
+=======
+import com.fag.listatarefasdozucco.Model.Lista;
+import com.fag.listatarefasdozucco.service.ListaService;
+>>>>>>> 7069dea502c4220d2a8cf774d8ff9d97674a7aa4
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,7 +47,12 @@ public class ListaController {
 
     @GetMapping("/delete/{id}")
     public String deleteTarefa(@PathVariable Long id) {
+<<<<<<< HEAD
         listaService.deleteTarefa(id);
         return "redirect:/";
     }
+=======
+        listaService.removeTarefa(id);
+        return "redirect:/";
+>>>>>>> 7069dea502c4220d2a8cf774d8ff9d97674a7aa4
 }

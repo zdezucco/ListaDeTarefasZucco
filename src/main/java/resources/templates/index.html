@@ -1,0 +1,26 @@
+ <!DOCTYPE html>
+ <html lang="PT-BR">
+ <head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Lista de Tarefas do Zucco</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='C:\Users\Z u c c o\Trabalhos de faculdade\FAG\4º Semestre\Linilto\ListaDeTarefasZucco\src\main\java\resources\static\css\style.css'>
+    <script src='C:\Users\Z u c c o\Trabalhos de faculdade\FAG\4º Semestre\Linilto\ListaDeTarefasZucco\src\main\java\resources\static\js\app.js'></script>
+ </head>
+ <body>
+    <h1>Lista de Tarefas</h1>
+    <ul>
+        <!--Lista de Tarefas é exibida aqui-->
+        <li th:each="tarefa : ${tarefas}" th:text="${tarefa.tarefa}">
+            <!-- Adiciona os links para marcar como concluído e excluir -->
+            <a th:if="${not tarefa.completado}" th:href="@{'/completado/' + ${tarefa.id}}">(Marcar como Concluído)</a>
+            <a th:href="@{'/delete/' + ${tarefa.id}}">(Excluir)></a>
+        </li>
+    </ul>
+    <form action="/add" method="post">
+        <input type="text" name="tarefa" required>
+        <button type="submit">Adicionar Tarefa</button>
+    </form>
+ </body>
+ </html>
