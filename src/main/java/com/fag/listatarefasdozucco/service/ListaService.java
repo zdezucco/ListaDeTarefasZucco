@@ -1,13 +1,17 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.fag.listatarefasdozucco.service;
 
-/**
- *
- * @author Z u c c o
- */
+import com.example.todo.model.Todo;
+import org.springframework.stereotype.Service;
+import java.util.List;
+
 public class ListaService {
-    
+    private List<Tarefa> tarefas;
+
+    public List<Tarefa> getAllTarefas(){
+        return tarefas;
+    }
+
+    public void addTarefa(Tarefa tarefa){
+        tarefas.add(tarefa);
+    }
 }
