@@ -1,9 +1,12 @@
-package com.fag.listatarefasdozucco.model;
+package com.fag.listadetarefasdozucco.model;
 
-
+@Entity
 public class Lista {
+
+
     private String tarefa;
     private boolean completado;
+    private Long id;
 
     public Lista(){
 
@@ -19,6 +22,7 @@ public class Lista {
     }
 
     public void setID(Long id){
+        this.id = id;
     }
 
     public String getTarefa(){
