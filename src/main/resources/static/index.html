@@ -6,78 +6,86 @@
   <title>Lista de Tarefas do Zucco</title>
   <style>
     body {
-        font-family: 'Arial', sans-serif;
-        margin: 20px;
-        background-color: #f4f4f4;
-    }
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+            background-color: #e0e0e0;
+        }
 
-    h1 {
-        color: #333;
-        text-align: center;
-    }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
 
-    form {
-        margin-top: 20px;
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
+        form {
+            margin-top: 20px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
 
-    label {
-        display: block;
-        margin-bottom: 8px;
-    }
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
 
-    input[type="text"],
-    button{
-       margin-bottom: 10px;
-       padding: 8px;
-       width: 100%;
-       box-sizing: border-box;
-    }
+        input[type="text"],
+        button {
+            margin-bottom: 10px;
+            padding: 8px;
+            width: calc(100% - 16px);
+            box-sizing: border-box;
+        }
 
-    button {
-        background-color: #4caf50;
-        color: white;
-        border: none;
-        cursor: pointer;
-        padding: 10px;
-        border-radius: 4px;
-    }
+        label input[type="radio"] {
+            margin-right: 5px;
+        }
 
-    button:hover {
-        background-color: #45a049;
-    }
+        button {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 4px;
+        }
 
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
-        background-color: #fff;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
 
-    th,
-    td {
-        border: 1px solid #ddd;
-        padding: 12px;
-        text-align: left;
-    }
+        button:hover {
+            background-color: #219a52;
+        }
 
-    th {
-        background-color: #f2f2f2;
-    }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
 
-    .actions-cell {
-        display: flex;
-        gap: 15px;
-    }
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
 
-    .actions-cell button {
-        padding: 8px;
-        border-radius: 4px;
-    }
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .actions-cell {
+            display: flex;
+            gap: 15px;
+        }
+
+        .actions-cell button {
+            padding: 8px;
+            border-radius: 4px;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
   </style>
 </head>
 <body>
