@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RepositorioTarefa extends CrudRepository<Tarefa, Long>{
-
+    // Nenhuma implementação adicional necessária, pois o CrudRepository já fornece métodos básicos CRUD
 }

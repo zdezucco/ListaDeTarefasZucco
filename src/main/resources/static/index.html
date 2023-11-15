@@ -4,92 +4,96 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lista de Tarefas do Zucco</title>
+
+  <!-- Toda parte visual da tela é comandada pelo Style -->
   <style>
     body {
-            font-family: 'Arial', sans-serif;
-            margin: 20px;
-            background-color: #e0e0e0;
-        }
+      font-family: 'Arial', sans-serif;
+      margin: 20px;
+      background-color: #e0e0e0;
+    }
 
-        h1 {
-            color: #2c3e50;
-            text-align: center;
-        }
+    h1 {
+      color: #2c3e50;
+      text-align: center;
+    }
 
-        form {
-            margin-top: 20px;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
+    form {
+      margin-top: 20px;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
 
-        label {
-            display: block;
-            margin-bottom: 8px;
-        }
+    label {
+      display: block;
+      margin-bottom: 8px;
+    }
 
-        input[type="text"],
-        button {
-            margin-bottom: 10px;
-            padding: 8px;
-            width: calc(100% - 16px);
-            box-sizing: border-box;
-        }
+    input[type="text"],
+    button {
+      margin-bottom: 10px;
+      padding: 8px;
+      width: calc(100% - 16px);
+      box-sizing: border-box;
+    }
 
-        label input[type="radio"] {
-            margin-right: 5px;
-        }
+    label input[type="radio"] {
+      margin-right: 5px;
+    }
 
-        button {
-            background-color: #27ae60;
-            color: white;
-            border: none;
-            cursor: pointer;
-            padding: 10px;
-            border-radius: 4px;
-        }
+    button {
+      background-color: #27ae60;
+      color: white;
+      border: none;
+      cursor: pointer;
+      padding: 10px;
+      border-radius: 4px;
+    }
 
+    button:hover {
+      background-color: #219a52;
+    }
 
-        button:hover {
-            background-color: #219a52;
-        }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
+    th,
+    td {
+      border: 1px solid #ddd;
+      padding: 12px;
+      text-align: left;
+    }
 
-        th,
-        td {
-            border: 1px solid #ddd;
-            padding: 12px;
-            text-align: left;
-        }
+    th {
+      background-color: #f2f2f2;
+    }
 
-        th {
-            background-color: #f2f2f2;
-        }
+    .actions-cell {
+      display: flex;
+      gap: 15px;
+    }
 
-        .actions-cell {
-            display: flex;
-            gap: 15px;
-        }
-
-        .actions-cell button {
-            padding: 8px;
-            border-radius: 4px;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
+    .actions-cell button {
+      padding: 8px;
+      border-radius: 4px;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
+<!-- Título da página -->
 <h1>Lista de Tarefas do Zucco</h1>
+
+<!-- Formulário para adicionar tarefas -->
 <form id="formularioAdicionarTarefa">
   <label for="descricaoTarefa">Digite o Nome da Tarefa:</label>
   <input type="text" id="descricaoTarefa" name="descricaoTarefa" required>
@@ -100,6 +104,8 @@
   </label>
   <button type="button" onclick="adicionarTarefa()">Adicionar Tarefa</button>
 </form>
+
+<!-- Tabela para exibir as tarefas -->
 <table>
   <thead>
   <tr>
@@ -111,16 +117,22 @@
   </thead>
   <tbody id="corpoTabelaTarefas"></tbody>
 </table>
+
+<!-- Script do JavaScript -->
 <script>
+  // Função para adicionar uma nova tarefa
   function adicionarTarefa() {
+    // Obter dados do formulário
     const descricaoTarefa = document.getElementById('descricaoTarefa').value;
     const concluida = document.getElementById('concluida').checked;
 
+    // Criar objeto com os dados da nova tarefa
     const novaTarefa = {
       descricao: descricaoTarefa,
       concluida: concluida,
     };
 
+    // Enviar requisição POST para o servidor
     fetch('http://localhost:8080/salvar', {
       method: 'POST',
       headers: {
@@ -128,118 +140,105 @@
       },
       body: JSON.stringify(novaTarefa),
     })
-            .then(response => response.json())
-            .then(data => {
-              console.log(data);
-              atualizarTabelaTarefas();
-            })
-            .catch(error => console.error('Erro:', error));
-  }
-
-  function atualizarTabelaTarefas() {
-    fetch('http://localhost:8080/encontrarTodas')
-            .then(response => response.json())
-            .then(data => {
-              const corpoTabelaTarefas = document.getElementById('corpoTabelaTarefas');
-              corpoTabelaTarefas.innerHTML = '';
-
-              data.forEach(tarefa => {
-                const linha = corpoTabelaTarefas.insertRow();
-                linha.insertCell(0).textContent = tarefa.id;
-                linha.insertCell(1).textContent = tarefa.descricao;
-
-                const celulaConclusao = linha.insertCell(2);
-                celulaConclusao.textContent = tarefa.concluida ? 'Concluída' : 'Pendente';
-
-                const celulaAcoes = linha.insertCell(3);
-                const botaoConcluir = document.createElement('button');
-                botaoConcluir.textContent = 'Marcar como Concluída';
-                botaoConcluir.onclick = function () {
-                  marcarTarefaComoConcluida(tarefa.id);
-                };
-                celulaAcoes.appendChild(botaoConcluir);
-              });
-            })
-            .catch(error => console.error('Erro:', error));
-  }
-
-  function marcarTarefaComoConcluida(idTarefa) {
-    console.log(idTarefa);
-    fetch(`http://localhost:8080/encontrar/${idTarefa}`)
-            .then(response => response.json())
-            .then(tarefa => {
-              tarefa.concluida = true;
-
-              fetch(`http://localhost:8080/alterar/${idTarefa}`, {
-                method: 'PUT',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(tarefa),
-              })
-                      .then(response => response.json())
-                      .then(data => {
-                        console.log(data);
-                        atualizarTabelaTarefas();
-                      })
-                      .catch(error => console.error('Erro:', error));
-            })
-            .catch(error => console.error('Erro ao obter a tarefa:', error));
-  }
-  function excluirTarefa(idTarefa) {
-    fetch(`http://localhost:8080/excluir/${idTarefa}`, {
-        method: 'DELETE',
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+      atualizarTabelaTarefas();
     })
-        .then(response => {
-            if (response.ok) {
-                console.log(`Tarefa com ID ${idTarefa} excluída com sucesso.`);
-                atualizarTabelaTarefas();
-            } else {
-                console.error(`Erro ao excluir a tarefa com ID ${idTarefa}.`);
-            }
-        })
-        .catch(error => console.error('Erro:', error));
+    .catch(error => console.error('Erro:', error));
   }
 
- function criarBotaoExcluir(idTarefa) {
+  // Função para atualizar a tabela de tarefas
+  function atualizarTabelaTarefas() {
+    // Enviar requisição GET para obter todas as tarefas
+    fetch('http://localhost:8080/encontrarTodas')
+    .then(response => response.json())
+    .then(data => {
+      const corpoTabelaTarefas = document.getElementById('corpoTabelaTarefas');
+      corpoTabelaTarefas.innerHTML = '';
+
+      // Preencher a tabela com os dados das tarefas
+      data.forEach(tarefa => {
+        const linha = corpoTabelaTarefas.insertRow();
+        linha.insertCell(0).textContent = tarefa.id;
+        linha.insertCell(1).textContent = tarefa.descricao;
+
+        const celulaConclusao = linha.insertCell(2);
+        celulaConclusao.textContent = tarefa.concluida ? 'Concluída' : 'Pendente';
+
+        const celulaAcoes = linha.insertCell(3);
+        celulaAcoes.classList.add('actions-cell');
+
+        // Botão para marcar como concluída
+        const botaoConcluir = document.createElement('button');
+        botaoConcluir.textContent = 'Marcar como Concluída';
+        botaoConcluir.onclick = function () {
+          marcarTarefaComoConcluida(tarefa.id);
+        };
+        celulaAcoes.appendChild(botaoConcluir);
+
+        // Botão para excluir
+        celulaAcoes.appendChild(criarBotaoExcluir(tarefa.id));
+      });
+    })
+    .catch(error => console.error('Erro:', error));
+  }
+
+  // Função para marcar uma tarefa como concluída
+  function marcarTarefaComoConcluida(idTarefa) {
+    // Obter a tarefa pelo ID
+    fetch(`http://localhost:8080/encontrar/${idTarefa}`)
+    .then(response => response.json())
+    .then(tarefa => {
+      // Atualizar o status da tarefa
+      tarefa.concluida = true;
+
+      // Enviar requisição PUT para atualizar a tarefa
+      fetch(`http://localhost:8080/alterar/${idTarefa}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(tarefa),
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        atualizarTabelaTarefas();
+      })
+      .catch(error => console.error('Erro:', error));
+    })
+    .catch(error => console.error('Erro ao obter a tarefa:', error));
+  }
+
+  // Função para excluir uma tarefa
+  function excluirTarefa(idTarefa) {
+    // Enviar requisição DELETE para excluir a tarefa pelo ID
+    fetch(`http://localhost:8080/excluir/${idTarefa}`, {
+      method: 'DELETE',
+    })
+    .then(response => {
+      if (response.ok) {
+        console.log(`Tarefa com ID ${idTarefa} excluída com sucesso.`);
+        atualizarTabelaTarefas();
+      } else {
+        console.error(`Erro ao excluir a tarefa com ID ${idTarefa}.`);
+      }
+    })
+    .catch(error => console.error('Erro:', error));
+  }
+
+  // Função para criar um botão de excluir
+  function criarBotaoExcluir(idTarefa) {
     const botaoExcluir = document.createElement('button');
     botaoExcluir.textContent = 'Excluir';
     botaoExcluir.onclick = function () {
-        excluirTarefa(idTarefa);
+      excluirTarefa(idTarefa);
     };
     return botaoExcluir;
-}
+  }
 
-function atualizarTabelaTarefas() {
-    fetch('http://localhost:8080/encontrarTodas')
-        .then(response => response.json())
-        .then(data => {
-            const corpoTabelaTarefas = document.getElementById('corpoTabelaTarefas');
-            corpoTabelaTarefas.innerHTML = '';
-
-            data.forEach(tarefa => {
-                const linha = corpoTabelaTarefas.insertRow();
-                linha.insertCell(0).textContent = tarefa.id;
-                linha.insertCell(1).textContent = tarefa.descricao;
-
-                const celulaConclusao = linha.insertCell(2);
-                celulaConclusao.textContent = tarefa.concluida ? 'Concluída' : 'Pendente';
-
-                const celulaAcoes = linha.insertCell(3);
-                celulaAcoes.classList.add('actions-cell');
-
-                const botaoConcluir = document.createElement('button');
-                botaoConcluir.textContent = 'Marcar como Concluída';
-                botaoConcluir.onclick = function () {
-                    marcarTarefaComoConcluida(tarefa.id);
-                };
-                celulaAcoes.appendChild(botaoConcluir);
-
-                celulaAcoes.appendChild(criarBotaoExcluir(tarefa.id));
-            });
-        })
-        .catch(error => console.error('Erro:', error));
-}
+  // Iniciar atualização da tabela ao carregar a página
   atualizarTabelaTarefas();
 </script>
 </body>
